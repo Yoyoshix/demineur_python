@@ -26,22 +26,13 @@ def generate_map(hei, wid, bomb):
     nb_cell = hei * wid
     cell_map = np.zeros((hei, wid))
     nb = [i for i in range(nb_cell)]
-    #bomb_pos = []
-    #table_density = np.zeros((hei, wid))
 
     for i in range(bomb):
-        #isok = False
-        #while (isok == False):
-        rdm = nb[np.random.random_integers(0, high = (nb_cell - i))]
+        rdm = nb[np.random.random_integers(0, high=(nb_cell - i))]
         y = rdm // wid
         x = rdm % wid
-        nb[rdm] = nb[nb_cell - i - 1]
-        #isok = True #((table_density[y][x] / density) >
         cell_map[y][x] = -1
-
-        #for j in range(hei):
-        #    for k in range(wid):
-        #        table_density[j][k] = (1 - table_density[j][k]) ** (abs(j - y) + abs(k - x))
+        nb[rdm] = nb[nb_cell - i - 1]
 
     #print(cell_map, '\n')
     for i in range(hei):
@@ -52,3 +43,6 @@ def generate_map(hei, wid, bomb):
     return (cell_map)
 
 print(generate_map(8, 8, int(8*8*0.2)))
+
+tab = [0,1,2,3]
+print(tab[-1])
