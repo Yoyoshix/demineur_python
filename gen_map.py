@@ -1,4 +1,5 @@
 import numpy as np
+import pygame
 
 def verify_param(value, min, max, name):
     if (type(value) != type(0)):
@@ -12,14 +13,42 @@ def verify_param(value, min, max, name):
         return (0)
     return (1)
 
-def generate_map(hei, wid, bomb, density):
+def get_neighbour(values, x, y):
+    res = 0
+    for i in range( -(x != 0), 1 + (x != len(values) - 1)):
+        for j in range( -(y != 0), 1 + (y != len(values[0]) - 1)):
+            #print(res, x, y, x + i, y + j)
+            res += (values[x + i][y + j] == -1)
+    return (res)
+
+#todo generate density
+def generate_map(hei, wid, bomb):
+    nb_cell = hei * wid
     values = np.zeros((hei, wid))
-    bomb_pos = np.empty((bomb))
-    print(values)
-    print(bomb_pos)
+    nb = [i for i in range(nb_cell)]
+    #bomb_pos = []
+    #table_density = np.zeros((hei, wid))
 
-    for i in range(len(bomb)):
-        tmp = np.random.random_integers(bomb - i)
-    # todo generate bomb position with epic random algo
+    for i in range(bomb):
+        #isok = False
+        #while (isok == False):
+        rdm = nb[np.random.random_integers(0, high = (nb_cell - i))]
+        y = rdm // wid
+        x = rdm % wid
+        nb[rdm] = nb[nb_cell - i - 1]
+        #isok = True #((table_density[y][x] / density) >
+        values[y][x] = -1
 
-generate_map(10, 10, 0, 0)
+        #for j in range(hei):
+        #    for k in range(wid):
+        #        table_density[j][k] = (1 - table_density[j][k]) ** (abs(j - y) + abs(k - x))
+
+    #print(values, '\n')
+    for i in range(hei):
+        for j in range(wid):
+            if (values[i][j] != -1):
+                values[i][j] = get_neighbour(values, i, j)
+
+    return (values)
+
+print(generate_map(8, 8, int(8*8*0.2)))
