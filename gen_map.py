@@ -17,7 +17,6 @@ def get_neighbour(cell_map, x, y):
     res = 0
     for i in range( -(x != 0), 1 + (x != len(cell_map) - 1)):
         for j in range( -(y != 0), 1 + (y != len(cell_map[0]) - 1)):
-            #print(res, x, y, x + i, y + j)
             res += (cell_map[x + i][y + j] == -1)
     return (res)
 
@@ -26,24 +25,14 @@ def generate_map(hei, wid, bomb):
     nb_cell = hei * wid
     cell_map = np.zeros((hei, wid))
     nb = [i for i in range(nb_cell)]
-    #bomb_pos = []
-    #table_density = np.zeros((hei, wid))
 
     for i in range(bomb):
-        #isok = False
-        #while (isok == False):
         rdm = nb[np.random.random_integers(0, high = (nb_cell - i))]
         y = rdm // wid
         x = rdm % wid
         nb[rdm] = nb[nb_cell - i - 1]
-        #isok = True #((table_density[y][x] / density) >
         cell_map[y][x] = -1
 
-        #for j in range(hei):
-        #    for k in range(wid):
-        #        table_density[j][k] = (1 - table_density[j][k]) ** (abs(j - y) + abs(k - x))
-
-    #print(cell_map, '\n')
     for i in range(hei):
         for j in range(wid):
             if (cell_map[i][j] != -1):
@@ -51,4 +40,4 @@ def generate_map(hei, wid, bomb):
 
     return (cell_map)
 
-print(generate_map(8, 8, int(8*8*0.2)))
+print(generate_map(18, 18, int(20*20*0.3)))
